@@ -57,50 +57,52 @@ function Step({ step, currentStep }) {
       : 'complete'
 
   return (
-    <motion.div
-      variants={{
-        inactive: {
-          backgroundColor: '#fff',
-          borderColor: '#94a3b8',
-          color: '#94a3b8',
-          scale: 1.2,
-        },
-        active: {
-          backgroundColor: '#fff',
-          borderColor: '#3b82f6',
-          color: '#3b82f6',
-          scale: 1.2,
-        },
-        complete: {
-          backgroundColor: '#3b82f6',
-          borderColor: '#3b82f6',
-          color: '#3b82f6',
-          scale: 1.2,
-        },
-      }}
-      animate={status}
-      initial={false}
-      /* animate={{
-        backgroundColor: status === 'complete' ? '#3b82f6' : '#fff',
-        borderColor:
-          status === 'complete' || status === 'active'
-            ? '#3b82f6'
-            : '#94a3b8',
-        color:
-          status === 'complete' || status === 'active'
-            ? '#3b82f6'
-            : '#94a3b8',
-      }} */
-      transition={{ duration: 1 }}
-      className='flex h-10 w-10 items-center justify-center rounded-full border-2 font-semibold'
-    >
-      <div className='flex items-center justify-center'>
-        {status === 'complete' ? (
-          <CheckIcon className='h-6 w-6 text-white' />
-        ) : (
-          <span>{step}</span>
-        )}
-      </div>
+    // all children get animate={status} inherited from the below parent
+    <motion.div animate={status} className='relative'>
+      <motion.div
+        variants={{
+          active: { scale: 1, transition: { delay: 0, duration: 0.3 } },
+          complete: { scale: 1.25 },
+        }}
+        transition={{
+          duration: 0.6,
+          delay: 0.2,
+          type: 'tween',
+          ease: 'circOut',
+        }}
+        className='absolute inset-0 bg-blue-200 rounded-full'
+      ></motion.div>
+
+      <motion.div
+        variants={{
+          inactive: {
+            backgroundColor: '#fff',
+            borderColor: '#94a3b8',
+            color: '#94a3b8',
+          },
+          active: {
+            backgroundColor: '#fff',
+            borderColor: '#3b82f6',
+            color: '#3b82f6',
+          },
+          complete: {
+            backgroundColor: '#3b82f6',
+            borderColor: '#3b82f6',
+            color: '#3b82f6',
+          },
+        }}
+        initial={false}
+        transition={{ duration: 0.3 }}
+        className='relative flex h-10 w-10 items-center justify-center rounded-full border-2 font-semibold'
+      >
+        <div className='flex items-center justify-center'>
+          {status === 'complete' ? (
+            <CheckIcon className='h-6 w-6 text-white' />
+          ) : (
+            <span>{step}</span>
+          )}
+        </div>
+      </motion.div>
     </motion.div>
   )
 }
@@ -114,7 +116,19 @@ function CheckIcon(props) {
       stroke='currentColor'
       strokeWidth={3}
     >
-      <path strokeLinecap='round' strokeLinejoin='round' d='M5 13l4 4L19 7' />
+      <motion.path
+        initial={{ pathLength: 0 }}
+        animate={{ pathLength: 1 }}
+        transition={{
+          delay: 0.2,
+          type: 'tween',
+          ease: 'easeOut',
+          duration: 0.3,
+        }}
+        strokeLinecap='round'
+        strokeLinejoin='round'
+        d='M5 13l4 4L19 7'
+      />
     </svg>
   )
 }
