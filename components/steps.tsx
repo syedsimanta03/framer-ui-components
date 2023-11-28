@@ -60,6 +60,7 @@ function Step({ step, currentStep }) {
     // all children get animate={status} inherited from the below parent
     <motion.div animate={status} className='relative'>
       <motion.div
+        //animate={status}
         variants={{
           active: { scale: 1, transition: { delay: 0, duration: 0.3 } },
           complete: { scale: 1.25 },
@@ -91,6 +92,7 @@ function Step({ step, currentStep }) {
             color: '#3b82f6',
           },
         }}
+        //animate={status}
         initial={false}
         transition={{ duration: 0.3 }}
         className='relative flex h-10 w-10 items-center justify-center rounded-full border-2 font-semibold'
